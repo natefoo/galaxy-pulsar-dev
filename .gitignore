@@ -1,0 +1,5 @@
+*.swp
+
+.env
+galaxy/database/*
+galaxy/venv

@@ -1,0 +1,33 @@
+---
+
+runners:
+  local:
+    load: galaxy.jobs.runners.local:LocalJobRunner
+    workers: 1
+  pulsar:
+    load: galaxy.jobs.runners.pulsar:PulsarMQJobRunner
+    workers: 1
+    amqp_url: amqp://guest:guest@rabbitmq:5672//
+    galaxy_url: http://galaxy-web:8080
+
+handling:
+  assign:
+    - db-skip-locked
+
+execution:
+  default: dynamic
+  environments:
+    dynamic:
+      runner: dynamic
+      function: rule
+    local:
+      runner: local
+    pulsar:
+      runner: pulsar
+      jobs_directory: /pulsar-jobs
+
+resources:
+  default: default
+  groups:
+    default:
+      - force_dest

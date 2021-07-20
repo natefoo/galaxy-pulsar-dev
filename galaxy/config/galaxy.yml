@@ -1,0 +1,29 @@
+---
+
+uwsgi:
+  http: :8080
+  buffer-size: 16384
+  processes: 1
+  threads: 4
+  offload-threads: 2
+  static-map: /static/style=static/style/blue
+  static-map: /static=static
+  static-map: /favicon.ico=static/favicon.ico
+  master: true
+  virtualenv: .venv
+  pythonpath: lib
+  module: galaxy.webapps.galaxy.buildapp:uwsgi_app()
+  thunder-lock: false
+  die-on-term: true
+  hook-master-start: unix_signal:2 gracefully_kill_them_all
+  hook-master-start: unix_signal:15 gracefully_kill_them_all
+  py-call-osafterfork: false
+  enable-threads: true
+
+galaxy:
+  managed_config_dir: /galaxy/database/config
+  database_connection: postgresql://galaxy:galaxy@postgres/galaxy
+  shed_tool_config_file: /galaxy/database/shed_tool_conf.xml
+  job_config_file: /galaxy/config/job_conf.yml
+  admin_users: admin@example.org
+  cleanup_job: never

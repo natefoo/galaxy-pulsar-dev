@@ -1,0 +1,6 @@
+<parameters>
+    <param label="Force Destination" name="force_dest" type="select">
+        <option value="local">local</option>
+        <option value="pulsar">pulsar</option>
+    </param>
+</parameters>

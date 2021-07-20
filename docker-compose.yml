@@ -1,0 +1,44 @@
+---
+
+version: "3.9"
+services:
+  postgres:
+    image: "${POSTGRES_IMAGE}"
+    environment:
+      POSTGRES_USER: galaxy
+      POSTGRES_PASSWORD: galaxy
+  rabbitmq:
+    image: "${RABBITMQ_IMAGE}"
+  galaxy-web:
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+    image: galaxy-pulsar-dev:galaxy
+    build:
+      context: "./galaxy/context"
+      args:
+        GALAXY_IMAGE: "${GALAXY_IMAGE}"
+        UID: "${UID}"
+        GID: "${GID}"
+    #user: "${UID}:${GID}"
+    command: /galaxy/.venv/bin/uwsgi --yaml config/galaxy.yml
+    volumes:
+      - "${GALAXY_ROOT}:/galaxy"
+      - "./galaxy/database:/galaxy/database"
+      - "./galaxy/venv:/galaxy/.venv:ro"
+      - "./galaxy/config:/galaxy/config:ro"
+      - "./galaxy/rule.py:/galaxy/lib/galaxy/jobs/rules/rule.py:ro"
+    ports:
+      - "8080:8080"
+  #galaxy-job:
+  #  image: galaxy-pulsar-dev:galaxy
+  #  depends_on:
+  #    - "postgres"
+  #    - "rabbitmq"
+  #    - "galaxy-web"
+  #  user: "${UID}:${GID}"
+  #pulsar:
+  #  depends_on:
+  #    - "rabbitmq"
+  #  build: "./pulsar"
+  #  user: "${UID}:${GID}"
