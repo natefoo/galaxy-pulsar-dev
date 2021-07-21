@@ -24,7 +24,7 @@ execution:
       runner: local
     pulsar:
       runner: pulsar
-      jobs_directory: /pulsar-jobs
+      jobs_directory: /pulsar/var/jobs
 
 resources:
   default: default

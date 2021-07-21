@@ -1,0 +1,11 @@
+---
+
+message_queue_url: amqp://guest:guest@rabbitmq:5672//
+persistence_directory: /pulsar/var/state
+staging_directory: /pulsar/var/jobs
+dependency_resolution:
+  resolvers:
+    - prefix: /pulsar/var/conda
+      type: conda
+      auto_init: true
+      auto_install: true

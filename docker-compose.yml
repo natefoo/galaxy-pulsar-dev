@@ -22,7 +22,7 @@ services:
         GID: "${GID}"
     #user: "${UID}:${GID}"
     command: /galaxy/.venv/bin/uwsgi --yaml config/galaxy.yml
-    volumes:
+    volumes: &galaxy_volumes
       - "${GALAXY_ROOT}:/galaxy"
       - "./galaxy/database:/galaxy/database"
       - "./galaxy/venv:/galaxy/.venv:ro"
@@ -30,15 +30,27 @@ services:
       - "./galaxy/rule.py:/galaxy/lib/galaxy/jobs/rules/rule.py:ro"
     ports:
       - "8080:8080"
-  #galaxy-job:
-  #  image: galaxy-pulsar-dev:galaxy
-  #  depends_on:
-  #    - "postgres"
-  #    - "rabbitmq"
-  #    - "galaxy-web"
-  #  user: "${UID}:${GID}"
-  #pulsar:
-  #  depends_on:
-  #    - "rabbitmq"
-  #  build: "./pulsar"
-  #  user: "${UID}:${GID}"
+  galaxy-job:
+    depends_on:
+      - "postgres"
+      - "rabbitmq"
+      - "galaxy-web"
+    image: galaxy-pulsar-dev:galaxy
+    command: /galaxy/.venv/bin/python3 scripts/galaxy-main --attach-to-pool=job-handlers
+    volumes: *galaxy_volumes
+  pulsar:
+    depends_on:
+      - "rabbitmq"
+    image: galaxy-pulsar-dev:pulsar
+    build:
+      context: "./pulsar/context"
+      args:
+        PULSAR_IMAGE: "${PULSAR_IMAGE}"
+        UID: "${UID}"
+        GID: "${GID}"
+    #command: pulsar-main
+    volumes:
+      - "${PULSAR_ROOT}:/pulsar"
+      - "./pulsar/var:/pulsar/var"
+      - "./pulsar/venv:/pulsar/.venv:ro"
+      - "./pulsar/config/app.yml:/pulsar/app.yml:ro"

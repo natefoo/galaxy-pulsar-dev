@@ -3,3 +3,5 @@
 .env
 galaxy/database/*
 galaxy/venv
+pulsar/var/*
+pulsar/venv
