@@ -63,3 +63,5 @@ services:
       - "./pulsar/var:/pulsar/var"
       - "./pulsar/venv:/pulsar/.venv:ro"
       - "./pulsar/config/app.yml:/pulsar/app.yml:ro"
+      # To use Galaxy's Conda instead (also adjust resolvers in pulsar/config/app.yml)
+      #- "./galaxy/database/dependencies/_conda:/galaxy/database/dependencies/_conda:ro"

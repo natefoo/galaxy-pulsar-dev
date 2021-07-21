@@ -9,3 +9,8 @@ dependency_resolution:
       type: conda
       auto_init: true
       auto_install: true
+    # To use Galaxy's Conda instead (also adjust volumes in docker-compose.yml)
+    #- prefix: /galaxy/database/dependencies/_conda
+    #  type: conda
+    #  auto_init: false
+    #  auto_install: false

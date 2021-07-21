@@ -18,6 +18,8 @@ This project evolved from a [single script][single-script] created in preparatio
 
 ## Usage
 
+You must have [Docker][get-docker] and [Docker Compose][docker-compose] installed.
+
 To start, run:
 
 ```console
@@ -79,6 +81,7 @@ by running:
 
 ```console
 $ make pulsar-galaxy-lib
+$ docker-compose restart galaxy-web galaxy-job
 ```
 
 The [single script][single-script] version of this project attempted to do this step for you automatically as-needed,
@@ -99,6 +102,10 @@ Then edit `.env` and set `$GALAXY_ROOT` and/or `$PULSAR_ROOT` accordingly.
 The directory `galaxy/config/` is mounted into the container over Galaxy's config directory, so you can make changes to
 Galaxy's config there as needed.
 
+Galaxy and Pulsar's virtualenvs and state directories are maintained outside of their respective clones and bind mounted
+in, so using this should not interfere with your normal virtualenvs, job directories, etc. in those clones. The Galaxy
+client is built and installed to the `static/` directory of the clone, however.
+
 These Galaxy users may be useful (you need to register them yourself):
   - admin@example.org: Galaxy Admin
   - local@example.org: Runs all jobs locally
@@ -110,7 +117,12 @@ To query the database, you can use:
 $ docker-compose exec postgres psql -U galaxy -w galaxy
 ```
 
+Currently, Galaxy and Pulsar maintain their own Conda installs, for isolation and more realistic testing. You may find
+this slow, space-consuming, and annoying if you're testing a lot of tools. If so, you can mount Galaxy's conda into
+Pulsar's venv in `docker-compose.yml` and adjust `pulsar/config/app.yml` accordingly.
+
 [docker-compose]: https://docs.docker.com/compose/
 [pulsar]: https://github.com/galaxyproject/pulsar/
 [galaxy]: https://github.com/galaxyproject/galaxy/
 [single-script]: https://gist.github.com/natefoo/f4ddd72f1a07a70f6703d1b640deef17
+[get-docker]: https://docs.docker.com/get-docker/
