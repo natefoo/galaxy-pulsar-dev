@@ -1,6 +1,9 @@
 ARG GALAXY_IMAGE
 FROM $GALAXY_IMAGE
 
+COPY pgcheck.py /pgcheck.py
+RUN chmod a+rx /pgcheck.py
+
 ARG UID GID
 RUN groupadd -g $GID galaxy
 RUN useradd -u $UID -g $GID -s /bin/bash -m -d /home/galaxy galaxy
@@ -12,3 +15,6 @@ WORKDIR /galaxy
 
 ENV PATH=/galaxy/.venv/bin:$PATH
 ENV VIRTUAL_ENV=/galaxy/.venv
+
+# wait for galaxy-web to create db to avoid race condition
+CMD python3 -u /pgcheck.py yeah && python3 scripts/galaxy-main --attach-to-pool=job-handlers

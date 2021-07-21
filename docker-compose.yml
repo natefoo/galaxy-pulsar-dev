@@ -13,15 +13,16 @@ services:
     depends_on:
       - "postgres"
       - "rabbitmq"
-    image: galaxy-pulsar-dev:galaxy
+    image: galaxy-pulsar-dev:galaxy-web
     build:
       context: "./galaxy/context"
+      dockerfile: "Dockerfile.web"
       args:
         GALAXY_IMAGE: "${GALAXY_IMAGE}"
         UID: "${UID}"
         GID: "${GID}"
     #user: "${UID}:${GID}"
-    command: /galaxy/.venv/bin/uwsgi --yaml config/galaxy.yml
+    #command: uwsgi --yaml config/galaxy.yml
     volumes: &galaxy_volumes
       - "${GALAXY_ROOT}:/galaxy"
       - "./galaxy/database:/galaxy/database"
@@ -34,10 +35,18 @@ services:
     depends_on:
       - "postgres"
       - "rabbitmq"
-      - "galaxy-web"
-    image: galaxy-pulsar-dev:galaxy
-    command: /galaxy/.venv/bin/python3 scripts/galaxy-main --attach-to-pool=job-handlers
+    image: galaxy-pulsar-dev:galaxy-job
+    build:
+      context: "./galaxy/context"
+      dockerfile: "Dockerfile.job"
+      args:
+        GALAXY_IMAGE: "${GALAXY_IMAGE}"
+        UID: "${UID}"
+        GID: "${GID}"
+    #command: python3 scripts/galaxy-main --attach-to-pool=job-handlers
     volumes: *galaxy_volumes
+    environment:
+      GALAXY_CONFIG_OVERRIDE_CONDA_INIT: 'false'
   pulsar:
     depends_on:
       - "rabbitmq"

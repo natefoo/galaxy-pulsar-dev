@@ -11,6 +11,9 @@ up-d: .env galaxy/venv pulsar/venv
 down:
 	docker-compose down
 
+restart:
+	docker-compose restart galaxy-web galaxy-job pulsar
+
 .env:
 	sh ./.env.in
 
@@ -27,5 +30,7 @@ clean:
 	rm -f .env
 	rm -rf galaxy/venv galaxy/database pulsar/venv pulsar/var
 	git checkout -- galaxy/database/README pulsar/var/README
+	docker-compose rm -sf
+	docker rmi -f galaxy-pulsar-dev:pulsar galaxy-pulsar-dev:galaxy-job galaxy-pulsar-dev:galaxy-web
 
 .PHONY: clean up up-d down pulsar-galaxy-lib
