@@ -25,6 +25,12 @@ execution:
     pulsar:
       runner: pulsar
       jobs_directory: /pulsar/var/jobs
+      # Uncomment the following lines to enable remote metadata
+      #remote_metadata: true
+      #remote_property_galaxy_home: /remote-galaxy
+      #env:
+      #  - name: GALAXY_VIRTUAL_ENV
+      #    value: /remote-galaxy/.venv
 
 resources:
   default: default

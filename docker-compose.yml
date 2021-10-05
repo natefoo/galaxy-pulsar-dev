@@ -59,6 +59,8 @@ services:
         GID: "${GID}"
     #command: pulsar-main
     volumes:
+      - "${GALAXY_ROOT}:/remote-galaxy:ro"
+      - "./remote-galaxy/venv:/remote-galaxy/.venv:ro"
       - "${PULSAR_ROOT}:/pulsar"
       - "./pulsar/var:/pulsar/var"
       - "./pulsar/venv:/pulsar/.venv:ro"

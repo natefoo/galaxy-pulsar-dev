@@ -12,5 +12,6 @@ WORKDIR /pulsar
 
 ENV PATH=/pulsar/.venv/bin:$PATH
 ENV VIRTUAL_ENV=/pulsar/.venv
+ENV GALAXY_HOME=/remote-galaxy
 
 CMD pulsar-main
