@@ -5,7 +5,7 @@ COPY pgcheck.py /pgcheck.py
 RUN chmod a+rx /pgcheck.py
 
 ARG UID GID
-RUN groupadd -g $GID galaxy
+RUN groupadd -f -g $GID galaxy
 RUN useradd -u $UID -g $GID -s /bin/bash -m -d /home/galaxy galaxy
 
 USER galaxy
