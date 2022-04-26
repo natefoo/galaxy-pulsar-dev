@@ -9,6 +9,7 @@ runners:
     workers: 1
     amqp_url: amqp://guest:guest@rabbitmq:5672//
     galaxy_url: http://galaxy-web:8080
+    remote_container_handling: true
 
 handling:
   assign:
@@ -25,6 +26,12 @@ execution:
     pulsar:
       runner: pulsar
       jobs_directory: /pulsar/var/jobs
+      file_action_config: /galaxy/config/pulsar_actions.yml
+      # Should dependencies be resolved in Galaxy or Pulsar (default: Galaxy)
+      #dependency_resolution: local
+      # Attempt dependency resolution via Singularity
+      #singularity_enabled: true
+      #require_container: true
       # Uncomment the following lines to enable remote metadata
       #remote_metadata: true
       #remote_property_galaxy_home: /remote-galaxy

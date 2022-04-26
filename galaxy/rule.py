@@ -3,7 +3,7 @@ log = logging.getLogger(__name__)
 
 def rule(tool_id, user_email, resource_params):
     destination_id = 'pulsar'
-    if tool_id in ('upload1'):
+    if tool_id in ('upload1', '__DATA_FETCH__'):
         destination_id = 'local'
     elif user_email == 'local@example.org':
         destination_id = 'local'

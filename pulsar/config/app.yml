@@ -7,8 +7,8 @@ dependency_resolution:
   resolvers:
     - prefix: /pulsar/var/conda
       type: conda
-      auto_init: true
-      auto_install: true
+      auto_init: false
+      auto_install: false
     # To use Galaxy's Conda instead (also adjust volumes in docker-compose.yml)
     #- prefix: /galaxy/database/dependencies/_conda
     #  type: conda

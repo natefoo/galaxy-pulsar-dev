@@ -1,0 +1,12 @@
+---
+
+paths:
+  # To test when a copy of tool data has been made (at a different path) on the remote
+  - path: /galaxy/var/tool-data
+    path_types: unstructured
+    action: rewrite
+    source_directory: /galaxy/var/tool-data
+    destination_directory: /pulsar/var/tool-data
+  # To test the remote_copy action (if the Galaxy FS is mounted on remote Pulsar but not the node where the job runs)
+  #- path: /galaxy/database
+  #  action: remote_copy

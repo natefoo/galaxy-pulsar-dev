@@ -67,3 +67,5 @@ services:
       - "./pulsar/config/app.yml:/pulsar/app.yml:ro"
       # To use Galaxy's Conda instead (also adjust resolvers in pulsar/config/app.yml)
       #- "./galaxy/database/dependencies/_conda:/galaxy/database/dependencies/_conda:ro"
+      # To use the remote_copy transfer action instead of remote_transfer (also set in galaxy/config/pulsar_actions.yml)
+      #- "./galaxy/database:/galaxy/database"

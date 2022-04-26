@@ -25,5 +25,9 @@ galaxy:
   database_connection: postgresql://galaxy:galaxy@postgres/galaxy
   shed_tool_config_file: /galaxy/database/shed_tool_conf.xml
   job_config_file: /galaxy/config/job_conf.yml
+  # If you want to override the tool config
+  #tool_config_file: /galaxy/config/tool_conf.xml
   admin_users: admin@example.org
   cleanup_job: never
+  conda_auto_init: false
+  conda_auto_install: false
