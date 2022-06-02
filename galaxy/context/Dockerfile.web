@@ -16,4 +16,4 @@ WORKDIR /galaxy
 ENV PATH=/galaxy/.venv/bin:$PATH
 ENV VIRTUAL_ENV=/galaxy/.venv
 
-CMD python3 /pgcheck.py && uwsgi --yaml ./config/galaxy.yml
+CMD python3 /pgcheck.py && galaxy

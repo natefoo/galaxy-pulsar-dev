@@ -3,7 +3,7 @@ import sys
 import time
 import psycopg2
 
-sql = 'SELECT version FROM migrate_version'
+sql = 'SELECT version_num FROM alembic_version'
 
 while True:
     try:
@@ -25,11 +25,11 @@ while True:
         cur.execute(sql)
         break
     except psycopg2.errors.UndefinedTable as e:
-        print(f"pgcheck.py: waiting for migrate_version table: {e}")
+        print(f"pgcheck.py: waiting for alembic_version table: {e}")
         conn.rollback()
         time.sleep(1)
 
-print(f"pgcheck.py: migrate_version table exists")
+print(f"pgcheck.py: alembic_version table exists")
 
 while True:
     cur.execute(sql)

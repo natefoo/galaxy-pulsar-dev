@@ -29,4 +29,4 @@ docker_run \
     -v "${PULSAR_ROOT}:/pulsar" \
     -v "${root}/pulsar/venv:/pulsar/.venv" \
     "$PULSAR_IMAGE" \
-    ./.venv/bin/pip install kombu pycurl
+    ./.venv/bin/pip install kombu pycurl tuspy

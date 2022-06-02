@@ -9,6 +9,10 @@ services:
       POSTGRES_PASSWORD: galaxy
   rabbitmq:
     image: "${RABBITMQ_IMAGE}"
+  tusd:
+    image: "${TUSD_IMAGE}"
+    #ports:
+    #  - "1080:1080"
   galaxy-web:
     depends_on:
       - "postgres"

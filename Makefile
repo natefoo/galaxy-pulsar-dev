@@ -14,7 +14,7 @@ down:
 restart:
 	docker-compose restart galaxy-web galaxy-job pulsar
 
-.env:
+.env: .env.in
 	sh ./.env.in
 
 galaxy/venv:
