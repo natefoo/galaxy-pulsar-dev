@@ -29,11 +29,11 @@ remote-galaxy/venv:
 pulsar-galaxy-lib:
 	bash ./galaxy/pulsar-galaxy-lib.sh
 
-clean:
-	rm -f .env
+clean: .env
 	rm -rf galaxy/venv galaxy/database pulsar/venv pulsar/var remote-galaxy/venv
 	git checkout -- galaxy/database/README pulsar/var/README
 	docker-compose rm -sf
 	docker rmi -f galaxy-pulsar-dev:pulsar galaxy-pulsar-dev:galaxy-job galaxy-pulsar-dev:galaxy-web
+	rm -f .env
 
 .PHONY: clean up up-d down pulsar-galaxy-lib
